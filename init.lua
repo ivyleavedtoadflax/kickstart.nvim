@@ -1016,6 +1016,8 @@ require('lazy').setup({
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
+  -- lazy's rtp reset only keeps /usr/lib/nvim; Debian's nvim ships bundled parsers in the multiarch dir
+  performance = { rtp = { paths = { '/usr/lib/x86_64-linux-gnu/nvim' } } },
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
