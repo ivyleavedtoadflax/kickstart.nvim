@@ -457,18 +457,6 @@ require('lazy').setup({
 
   -- LSP Plugins
   {
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
-    'folke/lazydev.nvim',
-    ft = 'lua',
-    opts = {
-      library = {
-        -- Load luvit types when the `vim.uv` word is found
-        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-      },
-    },
-  },
-  {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -740,9 +728,6 @@ require('lazy').setup({
     'saghen/blink.cmp',
     event = 'VimEnter',
     version = '1.*',
-    dependencies = {
-      'folke/lazydev.nvim',
-    },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
     opts = {
@@ -784,10 +769,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
-        providers = {
-          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-        },
+        default = { 'lsp', 'path', 'snippets' },
       },
 
       snippets = { preset = 'default' },
@@ -881,31 +863,6 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-  },
-
-  { -- Obsidian integration for Neovim
-    'obsidian-nvim/obsidian.nvim',
-    version = '*',
-    ft = 'markdown',
-    ---@module 'obsidian'
-    ---@type obsidian.config
-    opts = {
-      legacy_commands = false,
-      ui = { enable = false },
-      workspaces = {
-        {
-          name = 'brain',
-          path = '~/Obsidian/brain',
-        },
-      },
-      callbacks = {
-        pre_write_note = function(note)
-          if note.title and note.title:sub(1, 1) == '@' then
-            note:add_alias(note.title:sub(2))
-          end
-        end,
-      },
-    },
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
